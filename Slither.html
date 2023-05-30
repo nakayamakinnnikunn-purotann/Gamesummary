@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Slither.io</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.10.2/p5.min.js"></script>
+</head>
+<body>
+  <canvas id="canvas" width="600" height="400"></canvas>
+  <script>
+    var canvas = document.querySelector("canvas");
+    var ctx = canvas.getContext("2d");
+
+    // 蛇の初期位置とサイズ
+    var snake = {
+      x: 100,
+      y: 100,
+      width: 10,
+      height: 10,
+    };
+
+    // 食べ物の位置とサイズ
+    var food = {
+      x: 200,
+      y: 200,
+      width: 5,
+      height: 5,
+    };
+
+    // 蛇を動かす関数
+    function moveSnake() {
+      // マウスカーソルの位置に蛇を移動させる
+      snake.x = p5.mouseX;
+      snake.y = p5.mouseY;
+
+      // 蛇の頭が壁に当たったらゲームオーバー
+      if (snake.x < 0 || snake.x > canvas.width || snake.y < 0 || snake.y > canvas.height) {
+        gameOver();
+      }
+
+      // 蛇の頭が食べ物に当たったら蛇を大きくする
+      if (snake.x === food.x && snake.y === food.y) {
+        snake.width += 10;
+        snake.height += 10;
+        spawnFood();
+      }
+    }
+
+    // 食べ物をスポーンする関数
+    function spawnFood() {
+      // 食べ物の位置をランダムに決定する
+      food.x = Math.floor(Math.random() * canvas.width);
+      food.y = Math.floor(Math.random() * canvas.height);
+    }
+
+    // ゲームオーバーを表示する関数
+    function gameOver() {
+      // ゲームオーバー画面を表示する
+    }
+
+    // 画面を描画する関数
+    function draw() {
+      // 背景を黒く塗る
+      ctx.fillStyle = "black";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      // 蛇を描画する
+      ctx.fillStyle = "red";
+      ctx.fillRect(snake.x, snake.y, snake.width, snake.height);
+
+      // 食べ物を描画する
+      ctx.fillStyle = "green";
+      ctx.fillRect(food.x, food.y, food.width, food.height);
+    }
+
+    // 画面のリサイズイベントをハンドルする関数
+    function onResize() {
+      // キャンバスのサイズを変更する
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+
+    // 画面の描画を開始する
+    p5.setup = function() {
+      p5.createCanvas(canvas.width, canvas.height);
+      p5.windowResized(onResize);
+    };
+
+    // 画面の描画を更新する
+    p5.draw = draw;
+
+    // 蛇を動かす
+    p5.keyPressed = function(event) {
+      if (event.keyCode === 37) {
+        // 左に移動
+        snake.x -= 10;
+      } else if (event.keyCode === 38) {
+        // 上に移動
+        snake.y -= 10;
+      } else if (event.keyCode === 39) {
+        // 右に移動
+        snake.x += 10;
+      } else if (event.keyCode === 40) {
+        // 下に移動
+        snake.y += 10;
+      }
+    };
+
+    // 画面の描画を開始する
+    p5.start();
+  </script>
+</body>
+</html>
