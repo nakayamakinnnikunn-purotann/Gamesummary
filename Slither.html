@@ -17,22 +17,7 @@
 <body>
     <script>
     (function() {
-       var game;
-
-function resizeGame() {
-  var gameContainer = document.getElementById('game-container');
-  var width = gameContainer.offsetWidth;
-  var height = Math.floor(width * 0.625); // ゲームのアスペクト比を維持するための高さの計算
-
-  game.scale.setGameSize(width, height);
-}
-
-window.onload = function() {
-  game = new Phaser.Game(800, 500, Phaser.AUTO, 'game-container');
-
-  window.addEventListener('resize', resizeGame);
-  resizeGame();
-};
+ var game = new Phaser.Game(800, 500, Phaser.AUTO, null);
 
         game.state.add('Game', Game);
         game.state.start('Game');
