@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>Slither.io Clone - Loonride Example</title>
+    <title>Slither.io</title>
     <script src="lib/phaser.min.js"></script>
     <script src="src/game.js"></script>
     <script src="src/snake.js"></script>
@@ -17,7 +17,22 @@
 <body>
     <script>
     (function() {
-        var game = new Phaser.Game(800, 500, Phaser.AUTO, null);
+       var game;
+
+function resizeGame() {
+  var gameContainer = document.getElementById('game-container');
+  var width = gameContainer.offsetWidth;
+  var height = Math.floor(width * 0.625); // ゲームのアスペクト比を維持するための高さの計算
+
+  game.scale.setGameSize(width, height);
+}
+
+window.onload = function() {
+  game = new Phaser.Game(800, 500, Phaser.AUTO, 'game-container');
+
+  window.addEventListener('resize', resizeGame);
+  resizeGame();
+};
 
         game.state.add('Game', Game);
         game.state.start('Game');
